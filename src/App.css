@@ -4,32 +4,122 @@
   text-align: center;
   height: 100vh;
   width: 100vw;
+  box-sizing: border-box;
+  position: relative;
 }
+
 .m0 {
   margin: 0;
 }
+.main_section {
+  padding: 1.5rem;
+}
 .logo {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
+
+.border {
+  border: solid 0.1rem black;
+  border-radius: 1rem
+}
+
+/* @@@ 헤더 부분 전용 START @@@*/
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1em;
+  padding: 1rem;
   position: sticky;
   top: 0;
-  border-bottom: .1em solid black;
+  border-bottom: .1rem solid black;
 }
 nav {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
 }
+/* @@@ 헤더 부분 전용 END @@@*/
+
+/* ------------------------------ */
+
+/* @@@ 푸터 부분 전용 START @@@*/
 footer {
-  border-top: .1em solid black;
+  border-top: .1rem solid black;
+  padding: 1rem  ;
 }
-.border {
-  border: solid 0.1em black;
-  border-radius: 1em
+/* @@@ 푸터 부분 전용 END @@@*/
+
+/* ---------------------------- */
+
+/* @@@ 로그인 모달 START @@@*/
+
+#login {
+  position: absolute;
+  height: 0;
+  width: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
 }
+.loginModalBox {
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s;
+}
+.loginModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000050;
+}
+
+.loginBtn {
+  cursor: pointer;
+}
+#login:checked ~ .loginModalBox  {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* @@@ 로그인 모달 END @@@*/
+
+/* ------------------------ */
+
+/* @@@ 회원가입 모달 START @@@*/
+#signUp {
+  position: absolute;
+  height: 0;
+  width: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+}
+.signUpModalBox {
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s;
+}
+.signUpModal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000050;
+}
+#signUp:checked ~ .signUpModalBox  {
+  visibility: visible;
+  opacity: 1;
+}
+.signUpBtn {
+  cursor: pointer;
+}
+
+
+
+/* @@@ 회원가입 모달 END @@@*/

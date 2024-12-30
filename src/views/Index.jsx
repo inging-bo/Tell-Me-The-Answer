@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
-    <section className={IndexCss.section}>
+    <section className={`main_section ${IndexCss.section}`}>
       <div className={`border ${IndexCss.account}`}>
         <h2><Link to={"/account"}>자산</Link></h2>
       </div>

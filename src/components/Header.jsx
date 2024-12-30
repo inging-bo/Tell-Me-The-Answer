@@ -8,7 +8,7 @@ const Header = () => {
                 <Link to={"/account"}>자산</Link>
                 <Link to={"/finance"}>가계부</Link>
                 <Link to={"/news"}>경제뉴스</Link>
-                <button>로그인</button>
+                <label htmlFor="login" className="loginBtn">로그인</label>
             </nav>
         </header>
     )
