@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Login from './components/modal/Login'
 import SignUp from './components/modal/SignUp'
+import AuthState from './components/Test'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
     <input type="checkbox" id="login"/>
     <input type="checkbox" id="signUp"/>
+      <AuthState/>
       <Header/>
       <Router/>
       <Footer/>
