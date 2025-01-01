@@ -19,14 +19,22 @@ const SignUp = () => {
     e.preventDefault();
     const result = await signup(formData.email, formData.password);
     if (result.user) {
-      setMessage("회원가입 성공!");
       setFormData({
         email: "",
         password: "",
       })
-      console.log(result.user);
+      setMessage("")
+      alert("회원가입을 성공하였습니다.")
+      const signUpElement = document.querySelector('#signUp');
+      signUpElement.checked = false;
     } else {
-      setMessage("회원가입 실패: " + result.error);
+      if(result.error === "Firebase: Password should be at least 6 characters (auth/weak-password).") {
+        setMessage("비밀번호는 6자 이상이여야 합니다.");
+      } else if (result.error === "Firebase: Error (auth/email-already-in-use).") {
+        setMessage("사용중인 이메일 입니다.");
+      } else {
+        setMessage(`회원가입에 실패하였습니다 : ${result.error}`);
+      }
     }
   };
 
@@ -61,11 +69,11 @@ const SignUp = () => {
             required
           />
         </div>
+        {message && <p className={SignUpCss.message}>{message}</p>}
         <button className={`border ${SignUpCss.signUpBtn}`} type="submit">
           회원가입 완료
         </button>
       </form>
-      {message && <p className={SignUpCss.message}>{message}</p>}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Login from './components/modal/Login'
 import SignUp from './components/modal/SignUp'
-import AuthState from './components/Test'
+import AuthState from './components/AuthState'
 
 function App() {
 

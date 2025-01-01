@@ -10,7 +10,7 @@ const AuthState = () => {
       if (user) {
         setUser(user);
       } else {
-        setUser(null);
+        setUser(user);
       }
     });
 
@@ -21,8 +21,9 @@ const AuthState = () => {
     <div>
       {user ? (
         <p>{user.email} 님, 환영합니다!</p>
+        
       ) : (
-        <p>로그인되지 않았습니다.</p>
+        <p>게스트로 접속 중입니다.</p>
       )}
     </div>
   );
