@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
-import { logout, logoutKakao } from "../services/authService"; // authService에서 logout 가져오기
+import { logout } from "../services/authService"; // authService에서 logout 가져오기
 
-const Header = () => {
+export const Header = () => {
   const [loginState, setLoginState] = useState("로그인");
-  const [loginSource, setLoginSource] = useState(null); // 로그인 소스를 관리 (firebase, kakao)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoginState("로그아웃");
-        setLoginSource("firebase"); // Firebase 로그인 시 소스를 firebase로 설정
       } else {
         setLoginState("로그인");
-        setLoginSource(null); // Firebase 로그아웃 시 소스를 null로 설정
       }
     });
 
@@ -24,19 +21,10 @@ const Header = () => {
 
   // 로그아웃 처리
   const handleLogout = () => {
-    if (loginSource === "firebase") {
-      // Firebase 로그아웃
-      logout().then(() => {
-        setLoginState("로그인");
-        setLoginSource(null);
-      });
-    } else if (loginSource === "kakao") {
-      // Kakao 로그아웃
-      logoutKakao();
-      setLoginState("로그인");
-      setLoginSource(null);
-    }
+    logout()
   };
+
+
 
   return (
     <header>
@@ -63,4 +51,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+

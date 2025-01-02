@@ -46,16 +46,6 @@ export const logout = async () => {
   }
 };
 
-// 카카오 로그아웃 함수
-export const logoutKakao = () => {
-  if (window.Kakao) {
-    window.Kakao.Auth.logout(() => {
-      console.log("Kakao 로그아웃 성공");
-    });
-  } else {
-    console.error("Kakao SDK가 로드되지 않았습니다.");
-  }
-};
 
 // google 로그인
 export const signInWithGoogle = async () => {

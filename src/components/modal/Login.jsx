@@ -1,8 +1,6 @@
 import { useState } from "react";
 import LoginCss from "../../assets/css/login.module.css";
-import { login, signInWithGoogle } from "../../services/authService.js"; // authService.js에서 login 함수 import
-import KakaoLogin from "react-kakao-login";
-import { logout } from "../../services/authService"; // 로그아웃 함수 가져오기
+import { login, signInWithGoogle } from "../../services/authService"; // authService.js에서 login 함수 import
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -44,18 +42,6 @@ const Login = () => {
     }
   };
 
-  const handleKakaoSuccess = (response) => {
-    console.log("Kakao Login Success:", response);
-    const signUpElement = document.querySelector('#login');
-    signUpElement.checked = false;
-    // 카카오 로그인 후 Firebase 로그아웃 처리
-    logout(); // Firebase 로그아웃
-  };
-
-  const handleFailure = (error) => {
-    console.error("Kakao Login Failed:", error);
-  };
-
   return (
     <div className="loginModalBox">
       {/* 뒷배경 */}
@@ -91,15 +77,6 @@ const Login = () => {
           <span className={`${LoginCss.or}`}>또는</span>
         </div>
         <div onClick={handleGoogleLogin} className={`border ${LoginCss.other}`}>Google로 시작하기</div>
-        <KakaoLogin
-          token="4eb5002cbc38460d976a62fef8eee50f" // 카카오 디벨로퍼스의 JavaScript 키
-          onSuccess={handleKakaoSuccess}
-          onFail={handleFailure}
-          onLogout={() => console.log("Logged out")}
-          className={`border ${LoginCss.other}`}
-        >
-          카카오로 시작하기
-        </KakaoLogin>
         <label
           htmlFor="signUp"
           className={`signUpBtn ${LoginCss.signUpBtn}`}
