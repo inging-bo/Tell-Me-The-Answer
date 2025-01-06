@@ -29,7 +29,7 @@ export const Header = () => {
   return (
     <header>
       <Link to={"/"} className="logo">
-        Money Planet
+        Tell Me The Answer
       </Link>
       <nav>
         <Link to={"/account"}>자산</Link>
