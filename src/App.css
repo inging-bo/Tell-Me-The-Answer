@@ -1,13 +1,26 @@
 #root {
-  max-width: 1280px;
+  max-width: 375px;
   margin: 0 auto;
   text-align: center;
-  height: 100vh;
   width: 100vw;
   box-sizing: border-box;
   position: relative;
+  top: 50%;
+  background-color: #2c2d2b;
+  box-shadow: 6px 6px 35px 0px black;
+  padding: 0 1.5rem 1.5rem 1.5rem;
 }
-
+#root > section {
+  display: flex;
+  flex-direction: column;
+  min-height: 700px;
+  max-height: 700px;
+  overflow: hidden;
+}
+.routerSection {
+  overflow: scroll;
+  scrollbar-width: none;
+}
 .m0 {
   margin: 0;
 }
@@ -15,8 +28,9 @@
   padding: 1.5rem;
 }
 .logo {
-  font-weight: bold;
+  font-weight: 300;
   font-size: 1.5rem;
+  letter-spacing: -0.1rem;
 }
 
 .border {
@@ -29,96 +43,53 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  background-color: #2c2d2b;
   position: sticky;
   top: 0;
-  border-bottom: .1rem solid black;
+  padding: 1.5rem 0;
 }
 nav {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+.navItem {
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.notice {
+  background-image: url(./assets/img/bell.svg);
+}
+
+.login {
+  background-image: url(./assets/img/login.svg);
+}
 /* @@@ 헤더 부분 전용 END @@@*/
 
 /* ------------------------------ */
 
-/* @@@ 푸터 부분 전용 START @@@*/
-footer {
-  border-top: .1rem solid black;
-  padding: 1rem  ;
-}
-/* @@@ 푸터 부분 전용 END @@@*/
+/* @@@ 홈버튼 START @@@*/
 
-/* ---------------------------- */
-
-/* @@@ 로그인 모달 START @@@*/
-
-#login {
+.homeBtn {
   position: absolute;
-  height: 0;
-  width: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  opacity: 0;
-}
-.loginModalBox {
-  opacity: 0;
-  visibility: hidden;
-  transition: .2s;
-}
-.loginModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #00000050;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url(./assets/img/homeBtn.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 3.5rem;
+  height: 3.5rem;
+  z-index: 1;
 }
 
-.loginBtn {
-  cursor: pointer;
-}
-#login:checked ~ .loginModalBox  {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* @@@ 로그인 모달 END @@@*/
+/* @@@ 홈버튼 END @@@*/
 
 /* ------------------------ */
 
 /* @@@ 회원가입 모달 START @@@*/
-#signUp {
-  position: absolute;
-  height: 0;
-  width: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  opacity: 0;
-}
-.signUpModalBox {
-  opacity: 0;
-  visibility: hidden;
-  transition: .2s;
-}
-.signUpModal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #00000050;
-}
-#signUp:checked ~ .signUpModalBox  {
-  visibility: visible;
-  opacity: 1;
-}
-.signUpBtn {
-  cursor: pointer;
-}
 
 
 

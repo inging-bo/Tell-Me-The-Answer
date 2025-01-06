@@ -1,16 +1,20 @@
 import { Route, Routes } from "react-router-dom"
 import Index from "../views/Index";
-import Finance from "../views/Finance";
-import Account from "../views/Account";
-import News from "../views/news";
+import Notice from "../views/Notice";
+import CreateQuestion from "../views/CreateQuestion";
+import CheckQuestion from "../views/CheckQuestion";
+import SignUp from "../views/SignUp";
+import Login from "../views/Login";
 
 const Router = () => {
     return (
         <Routes>
             <Route path="/" element={<Index />}/>
-            <Route path="/account" element={<Account />}/>
-            <Route path="/finance" element={<Finance />}/>
-            <Route path="/news" element={<News />}/>
+            <Route path="/checkQuestion" element={<CheckQuestion />}/>
+            <Route path="/createQuestion" element={<CreateQuestion />}/>
+            <Route path="/Notice" element={<Notice />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/SignUp" element={<SignUp />}/>
         </Routes>
     )
 }

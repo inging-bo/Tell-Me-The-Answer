@@ -1,17 +1,27 @@
-.section {
-    display: grid;
-    grid-template-areas: 
-    "ac fi"
-    "ne ne";
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+a {
 }
-.account {
-    grid-area: ac;
+.questionList {
+    display: flex;
+    flex-wrap: wrap;
 }
-.finance {
-    grid-area: fi;
+.questionItem {
+    flex: 50%;
 }
-.news {
-    grid-area: ne;
+.linkItem {
+    pointer-events: none;
+}
+.title {
+
+}
+.text {
+
+}
+.nameBox {
+
+}
+.Author {
+
+}
+.comment {
+
 }
