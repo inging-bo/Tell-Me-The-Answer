@@ -1,11 +1,74 @@
-import SignUpCss from '../assets/css/signUp.module.css';
+import { useState } from "react";
+import SignUpCss from "../assets/css/signUp.module.css";
 
 const SignUp = () => {
-    return (
-        <section className={`${SignUpCss}`}>
-          회원가입입
-        </section>
-    )
-}
+  const [formData, setFormData] = useState({
+    username: "ddddddddddddddddddddddddddddddddddddddddddddddd",
+    password: "",
+    nickName: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 브라우저 기본 폼 제출 방지
+    console.log("Form submitted:", formData);
+
+    // API 요청 예시
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    }).then((response) => {
+      if (response.ok) alert("Login successful");
+      else alert("Login failed");
+    });
+  };
+  return (
+    <>
+      <h1 className={`${SignUpCss.title}`}>Sign Up</h1>
+      <form className={`${SignUpCss.form}`} onSubmit={handleSubmit}>
+        <div className={`border ${SignUpCss.dupBox}`}>
+          <input
+            className={`${SignUpCss.id}`}
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="ID"
+            required
+          />
+          <button className={`${SignUpCss.dupChkBtn}`}>중복확인</button>
+        </div>
+        <input
+          className={`border ${SignUpCss.pw}`}
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          required
+        />
+        <div className={`border ${SignUpCss.nickName}`}>
+          <input
+            type="text"
+            name="nickName"
+            value={formData.nickName}
+            onChange={handleChange}
+            placeholder="별명"
+            required
+          />
+          <button className={`${SignUpCss.dupChkBtn}`}>중복확인</button>
+        </div>
+        <button className={`${SignUpCss.SignUpBtn}`} type="submit">
+          Sign Up
+        </button>
+      </form>
+    </>
+  );
+};
 
 export default SignUp;

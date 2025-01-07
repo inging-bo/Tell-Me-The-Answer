@@ -220,6 +220,11 @@ const Index = () => {
       </ul>
       <div className={`${IndexCss.arrowBox}`}>
         <div className={`${IndexCss.left} ${IndexCss.arrow}`}></div>
+        <ul className={`${IndexCss.pageNation} `}>
+          <li className={`${IndexCss.page} ${IndexCss.curPage}`}></li>
+          <li className={`${IndexCss.page}`}></li>
+          <li className={`${IndexCss.page}`}></li>
+        </ul>
         <div className={`${IndexCss.right} ${IndexCss.arrow}`}></div>
       </div>
     </>

@@ -1,5 +1,6 @@
 a {
 }
+/* @@@ 질문리스트 START @@@*/
 .questionList {
     display: flex;
     flex-wrap: wrap;
@@ -14,31 +15,52 @@ a {
     pointer-events: none;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: flex-start;
-    padding: .5rem;
+    padding: .2rem .4rem;
 }
 .title {
-
+    font-size: 1rem;
 }
 .text {
-
+    font-size: 0.8rem;
 }
 .nameBox {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: .6rem;
 }
 .Author {
-
+    
 }
 .comment {
-
+    position: relative;
 }
+.comment::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1.2rem;
+    bottom: 0;
+    right: 0;
+    background-image: url(../img/message.svg);
+    background-position: left;
+    background-repeat: no-repeat;
+}
+/* @@@ 질문리스트 END @@@*/
+
+/* ----------------------- */
+
+/* @@@ 화살표 START @@@*/
 .arrowBox {
     
 }
 .arrow {
     width: 3.5rem;
     height: 3.5rem;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     background-repeat: no-repeat;
     background-size: 60%;
@@ -57,3 +79,39 @@ a {
     background-image: url(../img/arrow.svg);
     right: 13%;
 }
+
+@media (max-width: 375px) {
+    .arrow {
+      position: fixed;
+      bottom: 0.5rem;
+    }
+  }
+
+/* @@@ 화살표 END @@@*/
+
+/* @@@ 페이지 표시 START @@@*/
+
+.pageNation {
+    position: absolute;
+    display: flex;
+    gap: .5rem;
+    bottom: 5rem;
+    left: 50%;
+    transform: translate(-50%);
+}
+.page {
+    width: .6rem;
+    height: .6rem;
+    border-radius: 1.75rem;
+    background-color: gray;
+}
+.curPage {
+    background-color: #c7f860;
+}
+@media (max-width: 375px) {
+    .pageNation {
+      position: fixed;
+    }
+  }
+
+/* @@@ 페이지 표시시 END @@@*/

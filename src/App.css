@@ -24,11 +24,12 @@
   overflow: scroll;
   scrollbar-width: none;
 }
+input {
+  all: unset;
+  box-sizing: border-box;
+}
 .m0 {
   margin: 0;
-}
-.main_section {
-  padding: 1.5rem;
 }
 .logo {
   font-weight: 300;
@@ -37,7 +38,7 @@
 }
 
 .border {
-  border: solid 0.1rem black;
+  border: solid 0.1rem #ffffff;
   border-radius: 1rem
 }
 
@@ -102,3 +103,10 @@ nav {
 
 
 /* @@@ 회원가입 모달 END @@@*/
+
+@media (max-width: 375px) {
+  .homeBtn {
+    position: fixed;
+    bottom: 0.5rem;
+  }
+}
