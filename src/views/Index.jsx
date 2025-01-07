@@ -5,6 +5,7 @@ import IndexCss from '../assets/css/index.module.css';
 
 const Index = () => {
   return (
+    <>
       <ul className={`${IndexCss.questionList}`}>
         <li className={`${IndexCss.questionItem}`}>
           <Link to={"/"} className={`${IndexCss.linkItem}`}>
@@ -217,6 +218,11 @@ const Index = () => {
           </Link>
         </li>
       </ul>
+      <div className={`${IndexCss.arrowBox}`}>
+        <div className={`${IndexCss.left} ${IndexCss.arrow}`}></div>
+        <div className={`${IndexCss.right} ${IndexCss.arrow}`}></div>
+      </div>
+    </>
   );
 };
 

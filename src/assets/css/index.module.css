@@ -3,12 +3,19 @@ a {
 .questionList {
     display: flex;
     flex-wrap: wrap;
+    gap: 1.5rem;
 }
 .questionItem {
-    flex: 50%;
+    flex: 40%;
+    border-radius: .5rem;
+    border: solid .15rem #ffffff;
 }
 .linkItem {
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: .5rem;
 }
 .title {
 
@@ -17,11 +24,36 @@ a {
 
 }
 .nameBox {
-
+    display: flex;
 }
 .Author {
 
 }
 .comment {
 
+}
+.arrowBox {
+    
+}
+.arrow {
+    width: 3.5rem;
+    height: 3.5rem;
+    position: fixed;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center;
+    border: solid .1rem #ffffff50;
+    box-sizing: border-box;
+    border-radius: 1.75rem;
+    backdrop-filter: blur(0.2rem);
+}
+.left {
+    background-image: url(../img/arrow.svg);
+    transform: rotate(180deg);
+    left: 13%;
+}
+.right {
+    background-image: url(../img/arrow.svg);
+    right: 13%;
 }
