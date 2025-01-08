@@ -22,7 +22,7 @@ const Index = () => {
       </div>
       <ul className={`${IndexCss.questionList}`}>
         <li className={`${IndexCss.questionItem}`}>
-          <Link to={"/"} className={`${IndexCss.linkItem}`}>
+          <Link to={"/checkQuestion"} className={`${IndexCss.linkItem}`}>
             <h1 className={`${IndexCss.title}`}>
               제목입니다제목입니다제목입니다제목입니다제목입니다.
             </h1>

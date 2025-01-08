@@ -1,6 +1,3 @@
-a {
-}
-
 /* @@@ 상단 검색 START @@@*/
 
 .top {
@@ -39,12 +36,13 @@ a {
 }
 .questionItem {
     flex: 40%;
+    max-width: 47%;
     border-radius: .5rem;
     border: solid .15rem #ffffff;
     overflow: hidden;
 }
 .linkItem {
-    pointer-events: none;
+    /* pointer-events: none; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
