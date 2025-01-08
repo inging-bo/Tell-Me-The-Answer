@@ -36,4 +36,6 @@ body {
   list-style: none;
   text-decoration: none;
   color: #ffffff;
+  box-sizing: border-box;
+  border: none;
 }

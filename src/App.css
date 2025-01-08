@@ -1,10 +1,9 @@
 #root {
   max-width: 375px;
-  min-width: 320px;
+  min-width: 375px;
   margin: 0 auto;
   text-align: center;
   width: 100vw;
-  box-sizing: border-box;
   position: relative;
   top: 50%;
   background-color: #2c2d2b;
@@ -15,7 +14,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
   min-height: 700px;
   max-height: 700px;
@@ -24,9 +22,9 @@
   overflow: scroll;
   scrollbar-width: none;
 }
+
 input {
-  all: unset;
-  box-sizing: border-box;
+  /* all: unset; */
 }
 .m0 {
   margin: 0;
@@ -51,6 +49,9 @@ header {
   position: sticky;
   top: 0;
   padding: 1.5rem 0;
+}
+#root:has(.indexSection) header  {
+  padding-bottom: 0;
 }
 nav {
   display: flex;
@@ -89,7 +90,6 @@ nav {
   height: 3.5rem;
   z-index: 1;
   border: solid .1rem #ffffff50;
-  box-sizing: border-box;
   border-radius: 1.75rem;
   backdrop-filter: blur(0.2rem);
 }

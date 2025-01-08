@@ -1,5 +1,36 @@
 a {
 }
+
+/* @@@ 상단 검색 START @@@*/
+
+.top {
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.search {
+    color: #2c2d2b;
+    padding: 0.8rem;
+}
+.createQuestion {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    padding: 0.5rem;
+    color: #c7f860;
+    font-weight: bold;
+}
+
+/* @@@ 상단 검색 END @@@*/
+
+/* ------------------------ */
+
 /* @@@ 질문리스트 START @@@*/
 .questionList {
     display: flex;
@@ -10,6 +41,7 @@ a {
     flex: 40%;
     border-radius: .5rem;
     border: solid .15rem #ffffff;
+    overflow: hidden;
 }
 .linkItem {
     pointer-events: none;
@@ -17,37 +49,61 @@ a {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    padding: .2rem .4rem;
+    padding: 0.2rem 0 0.2rem 0.4rem;
+    white-space: nowrap;
+    text-align: left;
 }
 .title {
     font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
 }
 .text {
     font-size: 0.8rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
 }
 .nameBox {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: baseline;
     font-size: .6rem;
 }
 .Author {
-    
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 1rem;
+    min-width: 65%;
+    max-width: 65%;
 }
 .comment {
     position: relative;
+    overflow: hidden;
+    padding-left: 1.1rem;
+    width: fit-content;
+    max-width: 1.9rem;
+    letter-spacing: 0.1rem;
 }
 .comment::before {
     content: "";
     position: absolute;
     top: 0;
-    left: -1.2rem;
+    left: 0;
     bottom: 0;
     right: 0;
     background-image: url(../img/message.svg);
     background-position: left;
     background-repeat: no-repeat;
+}
+.comment::after {
+    content: "+";
+    position: absolute;
+    left: 1.5rem;
+    padding-left: 0.05rem;
+    background-color: #2c2d2b;
 }
 /* @@@ 질문리스트 END @@@*/
 
@@ -66,7 +122,6 @@ a {
     background-size: 60%;
     background-position: center;
     border: solid .1rem #ffffff50;
-    box-sizing: border-box;
     border-radius: 1.75rem;
     backdrop-filter: blur(0.2rem);
 }

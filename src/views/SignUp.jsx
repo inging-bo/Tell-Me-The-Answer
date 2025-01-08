@@ -3,7 +3,7 @@ import SignUpCss from "../assets/css/signUp.module.css";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: "ddddddddddddddddddddddddddddddddddddddddddddddd",
+    username: "",
     password: "",
     nickName: "",
   });
@@ -28,10 +28,10 @@ const SignUp = () => {
     });
   };
   return (
-    <>
+    <section className={`${SignUpCss.section}`}>
       <h1 className={`${SignUpCss.title}`}>Sign Up</h1>
       <form className={`${SignUpCss.form}`} onSubmit={handleSubmit}>
-        <div className={`border ${SignUpCss.dupBox}`}>
+        <div className={`${SignUpCss.dupChkBox}`}>
           <input
             className={`${SignUpCss.id}`}
             type="text"
@@ -44,7 +44,7 @@ const SignUp = () => {
           <button className={`${SignUpCss.dupChkBtn}`}>중복확인</button>
         </div>
         <input
-          className={`border ${SignUpCss.pw}`}
+          className={`${SignUpCss.pw}`}
           type="password"
           name="password"
           value={formData.password}
@@ -52,8 +52,9 @@ const SignUp = () => {
           placeholder="Password"
           required
         />
-        <div className={`border ${SignUpCss.nickName}`}>
+        <div className={`${SignUpCss.dupChkBox}`}>
           <input
+            className={`${SignUpCss.nickName}`}
             type="text"
             name="nickName"
             value={formData.nickName}
@@ -67,7 +68,7 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
-    </>
+    </section>
   );
 };
 

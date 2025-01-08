@@ -1,11 +1,73 @@
-/* @@@  START @@@*/
+/* @@@ 알림 페이지 START @@@*/
+.routerSection {
+    background-color: aqua;
+}
+.notice {
+    flex-grow: 1;
+}
+.noticeSection {
+}
+.noticeList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.noticeItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1rem;
+    white-space: nowrap;
+    text-align: left;
+}
+.title {
+    font-size: 1.1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 85%;
+}
+.nickName {
 
-/* @@@  END @@@*/
+}
+.answer {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 85%;
+    font-size: 0.8rem;
+    color: gray;
+    
+}
+.clsBtn {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(135deg);
+    cursor: pointer;
+    
+}
+.clsBtn::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 47%;
+    right: 47%;
+    bottom: 10%;
+    background-color: #ffffff;
+    
+}
+.clsBtn::after {
+    content: "";
+    position: absolute;
+    top: 47%;
+    left: 10%;
+    right: 10%;
+    bottom: 47%;
+    background-color: #ffffff;
+
+}
+/* @@@ 알림 페이지 END @@@*/
 
 /* --------------------------------- */
-
-/* @@@ START @@@*/
-
-
-
-/* @@@ END @@@*/

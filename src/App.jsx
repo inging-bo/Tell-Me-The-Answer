@@ -3,14 +3,13 @@ import './App.css'
 import Router from './router/router'
 import {Header} from './components/Header'
 import { HomeBtn } from './components/HomeBtn'
-
 function App() {
 
   return (
     <BrowserRouter>
       <section>
         <Header/>
-        <section className='routerSection'>
+        <section className={`routerSection`}>
           <Router/>
         </section>
         <HomeBtn/>
