@@ -37,6 +37,8 @@ const Login = () => {
           value={formData.username}
           onChange={handleChange}
           placeholder="ID"
+          maxLength="20"
+          minLength="4" 
           required
         />
         <input
@@ -46,6 +48,7 @@ const Login = () => {
           value={formData.password}
           onChange={handleChange}
           placeholder="Password"
+          minLength="8"
           required
         />
         <button className={`${LoginCss.loginBtn}`} type="submit">Login</button>

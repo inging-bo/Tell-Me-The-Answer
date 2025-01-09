@@ -1,3 +1,45 @@
-.section {
-    /* height: 40vh; */
+.createQuestionSection {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputTitle {
+    background-color: transparent;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    text-align: center;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 1rem 1rem;
+    outline: none;
+}
+.textarea {
+    flex-grow: 1;
+    background-color: transparent;
+    resize: none;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1rem;
+    outline: none;
+}
+
+.btn {
+    cursor: pointer;
+    width: fit-content;
+    padding: 0.5rem 2rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+    background-color: #c7f860;
+    color: #2c2d2b;
+}
+.btn:focus {
+    box-shadow: inset 0.1rem 0.1rem 0.2rem 0rem #00000050
+}
+.btn:active {
+    box-shadow: inset 0.1rem 0.1rem 0.2rem 0rem #00000050
 }

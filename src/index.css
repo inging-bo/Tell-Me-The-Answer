@@ -8,7 +8,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  --green: #c7f860;
+  --main: #2c2d2b;
 }
 
 a {

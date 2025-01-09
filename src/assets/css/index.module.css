@@ -20,7 +20,7 @@
     transform: translateY(-50%);
     font-size: 2rem;
     padding: 0.5rem;
-    color: #c7f860;
+    color: var(--green);;
     font-weight: bold;
 }
 
@@ -159,7 +159,7 @@
     background-color: gray;
 }
 .curPage {
-    background-color: #c7f860;
+    background-color: var(--green);;
 }
 @media (max-width: 375px) {
     .pageNation {

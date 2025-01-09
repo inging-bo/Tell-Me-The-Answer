@@ -39,6 +39,8 @@ const SignUp = () => {
             value={formData.username}
             onChange={handleChange}
             placeholder="ID"
+            minLength="4" 
+            maxLength="20"
             required
           />
           <button className={`${SignUpCss.dupChkBtn}`}>중복확인</button>
@@ -50,6 +52,7 @@ const SignUp = () => {
           value={formData.password}
           onChange={handleChange}
           placeholder="Password"
+          minLength="8" 
           required
         />
         <div className={`${SignUpCss.dupChkBox}`}>
@@ -60,6 +63,7 @@ const SignUp = () => {
             value={formData.nickName}
             onChange={handleChange}
             placeholder="별명"
+            maxLength="20"
             required
           />
           <button className={`${SignUpCss.dupChkBtn}`}>중복확인</button>
