@@ -1,11 +1,9 @@
 /* @@@ 알림 페이지 START @@@*/
-.routerSection {
-    background-color: aqua;
+.noticeSection * {
+    caret-color: transparent;
 }
 .notice {
     flex-grow: 1;
-}
-.noticeSection {
 }
 .noticeList {
     display: flex;

@@ -22,6 +22,7 @@
     text-align: center;
     font-size: 1.5rem;
     padding-bottom: 1rem;
+    caret-color: transparent;
 }
 .questionText {
     width: 100%;
@@ -63,7 +64,7 @@
     border-radius: 0.8rem;
     font-size: 1.2rem;
     background-color: var(--green);
-    color: #2c2d2b;
+    color: var(--main);
     margin: 0.3rem;
 
 }
@@ -137,11 +138,12 @@
     flex-direction: column;
 }
 .edit {
-    color: #c7f860;
+    color: var(--green);
     writing-mode: vertical-rl; /* 세로 쓰기 (오른쪽에서 왼쪽) */
     letter-spacing: 0.2rem;
     padding-top: 0.7rem;
     cursor: pointer;
+    caret-color: transparent;
 }
 /* @@@ 댓글 리스트 END */
 

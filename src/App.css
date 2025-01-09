@@ -6,7 +6,7 @@
   width: 100vw;
   position: relative;
   top: 50%;
-  background-color: #2c2d2b;
+  background-color: var(--main);
   box-shadow: 6px 6px 35px 0px black;
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
@@ -57,7 +57,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #2c2d2b;
+  background-color: var(--main);
   position: sticky;
   top: 0;
   padding: 1.5rem 0;

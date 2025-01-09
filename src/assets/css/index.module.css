@@ -10,7 +10,7 @@
 }
 
 .search {
-    color: #2c2d2b;
+    color: var(--main);
     padding: 0.8rem;
 }
 .createQuestion {
@@ -101,7 +101,7 @@
     position: absolute;
     left: 1.5rem;
     padding-left: 0.05rem;
-    background-color: #2c2d2b;
+    background-color: var(--main);
 }
 /* @@@ 질문리스트 END @@@*/
 
