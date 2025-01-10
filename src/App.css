@@ -38,6 +38,12 @@
 input {
   /* all: unset; */
 }
+input:-webkit-autofill {
+  background-color: transparent !important; /* 자동 완성된 배경색 변경 */
+}
+input:-internal-autofill-selected  {
+  background-color: transparent !important;
+}
 .m0 {
   margin: 0;
 }

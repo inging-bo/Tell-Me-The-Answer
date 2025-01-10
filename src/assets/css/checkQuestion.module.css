@@ -56,6 +56,7 @@
     outline: none;
     resize: none;
     scrollbar-width: none;
+    font-size: 1rem;
 }
 .formBtn {
     width: fit-content;
@@ -110,22 +111,25 @@
 .commentN_T {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     flex-basis: 75%;
     max-width: 75%;
     min-width: 75%;
     padding-left: 0.5rem;
-
 }
 .commentName {
     text-overflow: ellipsis;
+    text-align: left;
     font-size: 0.8rem;
     color: gray;
     white-space: nowrap;
     max-width: -webkit-fill-available;
     overflow: hidden;
+    background-color: transparent;
 }
 .commentText {
+    background-color: transparent;
+    resize: none;
     text-align: left;
     font-size: 0.9rem;
 }
@@ -138,12 +142,11 @@
     flex-direction: column;
 }
 .edit {
-    color: var(--green);
+    color: var(--green);;
     writing-mode: vertical-rl; /* 세로 쓰기 (오른쪽에서 왼쪽) */
     letter-spacing: 0.2rem;
     padding-top: 0.7rem;
     cursor: pointer;
-    caret-color: transparent;
 }
 /* @@@ 댓글 리스트 END */
 
