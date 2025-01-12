@@ -147,6 +147,7 @@
     letter-spacing: 0.2rem;
     padding-top: 0.7rem;
     cursor: pointer;
+    caret-color: transparent;
 }
 /* @@@ 댓글 리스트 END */
 

@@ -23,11 +23,12 @@
     padding: 0.5rem;
     caret-color: transparent;
 }
-.modify, .del {
+.del {
     padding: 0.3rem;
     color: var(--main);
     cursor: pointer;
+    caret-color: transparent;
 }
-.modify:hover, .del:hover {
+.del:hover {
     color: var(--green);
 }
