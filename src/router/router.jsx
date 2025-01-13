@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const Router = () => {
     const [questions, setQuestions] = useState([]);
-
+    
     // 질문 추가 함수
     const addQuestion = (newQuestion) => {
       setQuestions((prevQuestions) => [newQuestion, ...prevQuestions]);

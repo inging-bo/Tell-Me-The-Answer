@@ -89,6 +89,9 @@ nav {
 .login {
   background-image: url(./assets/img/login.svg);
 }
+.logout {
+  background-image: url(./assets/img/profile.svg);
+}
 /* @@@ 헤더 부분 전용 END @@@*/
 
 /* ------------------------------ */
