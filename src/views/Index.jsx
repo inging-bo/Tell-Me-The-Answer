@@ -17,7 +17,7 @@ const Index = ({ questions }) => {
           +
         </Link>
       </div>
-      <ul className={`${IndexCss.questionList}`}>
+      <ul className={`questionList ${IndexCss.questionList}`}>
         {questions.map((question, index) => (
           <li key={index} className={`${IndexCss.questionItem}`}>
             <Link to={`/checkQuestion/${index}`} className={`${IndexCss.linkItem}`}>

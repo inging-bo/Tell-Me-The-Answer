@@ -12,7 +12,7 @@ const Router = () => {
 
     // 질문 추가 함수
     const addQuestion = (newQuestion) => {
-      setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+      setQuestions((prevQuestions) => [newQuestion, ...prevQuestions]);
     };
     return (
         <Routes>
