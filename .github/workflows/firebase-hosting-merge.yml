@@ -13,7 +13,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Vite에서 사용하는 Node.js 버전 설정
+          node-version: '17'  # Vite에서 사용하는 Node.js 버전 설정
       - run: npm install  # 의존성 설치
       - run: npm run build  # Vite 빌드
       - name: Install Firebase CLI
