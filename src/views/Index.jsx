@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../firebase"; // Firebase Firestore 초기화
 import IndexCss from "../assets/css/index.module.css";
 
@@ -9,22 +9,25 @@ const Index = () => {
   const [loading, setLoading] = useState(true);  // 로딩 상태 관리
 
   // Firestore에서 질문 데이터를 가져오는 함수
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "questions"));
-        const fetchedQuestions = querySnapshot.docs.map((doc) => ({
-          id: doc.id,  // 문서 ID를 함께 저장
-          ...doc.data(), // Firestore에서 가져온 데이터
-        }));
-        setQuestions(fetchedQuestions); // 질문 상태 업데이트
-        setLoading(false); // 로딩 완료
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
 
-    fetchQuestions();
+  useEffect(() => {
+    // Firestore에서 질문을 createdAt 기준으로 오름차순 정렬
+    const q = query(
+      collection(db, "questions"),
+      orderBy("createdAt", "desc") // 오름차순 정렬
+    );
+  
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedQuestions = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setQuestions(fetchedQuestions);
+      setLoading(false);
+    });
+  
+    // 컴포넌트가 언마운트될 때 리스너 정리
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
