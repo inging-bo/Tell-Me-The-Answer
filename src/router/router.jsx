@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom"
 import Index from "../views/Index";
-import Notice from "../views/Notice";
 import CreateQuestion from "../views/CreateQuestion";
 import CheckQuestion from "../views/CheckQuestion";
 import SignUp from "../views/SignUp";
@@ -12,7 +11,6 @@ const Router = () => {
             <Route path="/" element={<Index />}/>
             <Route path="/checkQuestion/:id" element={<CheckQuestion />}/>
             <Route path="/createQuestion" element={<CreateQuestion />}/>
-            <Route path="/Notice" element={<Notice />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/SignUp" element={<SignUp />}/>
         </Routes>

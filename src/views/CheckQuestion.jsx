@@ -2,12 +2,7 @@ import { useParams } from "react-router-dom";
 import CheckQuestionCss from "../assets/css/checkQuestion.module.css";
 import { useState, useEffect, useRef } from "react";
 import { EditModal } from "../components/EditModal";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore"; // Firebase Firestore imports
+import { doc, getDoc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore"; // Firebase Firestore imports
 import { db } from "../firebase"; // Firebase app initialization (adjust path as needed)
 
 const CheckQuestion = () => {
@@ -23,39 +18,29 @@ const CheckQuestion = () => {
   // 서버에서 데이터 가져오기 (Firestore에서)
   useEffect(() => {
     const fetchQuestion = async () => {
-      // 먼저 로컬스토리지에서 QUESTION 키로 데이터를 찾음
-      const storedData = localStorage.getItem("QUESTION");
-      const storedQuestion = storedData ? JSON.parse(storedData) : null;
+      // Firestore에서 데이터 가져오기
+      const docRef = doc(db, "questions", id);
 
-      if (storedQuestion && storedQuestion[id]) {
-        // QUESTION 안에 해당 ID로 저장된 질문이 있으면
-        const questionData = storedQuestion[id];
-        setQuestion(questionData); // 질문 상태에 저장
-        setCommentList(questionData.commentBox || []); // 댓글 상태에 저장
-        setLoading(false);
-      } else {
-        // Firestore에서 데이터 가져오기
-        const docRef = doc(db, "questions", id);
-        try {
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const questionData = docSnap.data();
-            setQuestion(questionData); // 질문 상태에 저장
-            setCommentList(questionData.commentBox || []); // 댓글 상태에 저장
+      // Firestore 실시간 리스너를 사용하여 데이터 변경 시 자동으로 업데이트
+      const unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const questionData = docSnap.data();
+          setQuestion(questionData); // 질문 상태에 저장
+          setCommentList(questionData.commentBox || []); // 댓글 상태에 저장
+          setLoading(false);
 
-            // 로컬스토리지에 저장
-            const updatedData = storedData ? JSON.parse(storedData) : {};
-            updatedData[id] = questionData;
-            localStorage.setItem("QUESTION", JSON.stringify(updatedData));
-          } else {
-            console.log("No such document!");
-          }
-          setLoading(false);
-        } catch (error) {
-          console.error("Error getting document:", error);
-          setLoading(false);
+          // 로컬스토리지에 저장
+          const storedData = localStorage.getItem("QUESTION");
+          const storedQuestion = storedData ? JSON.parse(storedData) : {};
+          storedQuestion[id] = questionData;
+          localStorage.setItem("QUESTION", JSON.stringify(storedQuestion));
+        } else {
+          console.log("No such document!");
         }
-      }
+      });
+
+      // 컴포넌트가 unmount될 때 리스너를 정리
+      return () => unsubscribe();
     };
 
     fetchQuestion();
@@ -80,28 +65,13 @@ const CheckQuestion = () => {
         commentBox: arrayUnion(newComment),
       });
 
-      // Firestore에서 최신 데이터 가져오기
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const updatedQuestion = docSnap.data();
-        
-        // 로컬 상태 업데이트
-        setCommentList(updatedQuestion.commentBox || []);
-
-        // 로컬 스토리지 업데이트
-        const storedData = localStorage.getItem("QUESTION");
-        const storedQuestion = storedData ? JSON.parse(storedData) : {};
-        storedQuestion[id] = updatedQuestion;
-        localStorage.setItem("QUESTION", JSON.stringify(storedQuestion));
-      }
-
       setFormText(""); // 입력 필드 초기화
     } catch (error) {
       console.error("Error adding comment:", error);
       alert("댓글을 추가하는 중 오류가 발생했습니다.");
     }
   };
-  console.log("commentList:", commentList);
+
   // 삭제 모달 오픈
   const openEditModal = (id) => {
     setShowEditId((prevId) => (prevId === id ? null : id)); // 같은 ID를 클릭하면 닫기
@@ -170,55 +140,57 @@ const CheckQuestion = () => {
       </form>
       <div className={`${CheckQuestionCss.commentBox}`}>
         <ul className={`${CheckQuestionCss.commentList}`}>
-          {(Array.isArray(commentList) ? commentList : []).map((commentItem, idx) => (
-            <li key={idx} className={`${CheckQuestionCss.commentItem}`}>
-              <div className={`${CheckQuestionCss.commentImg}`}>
-                <span className={`${CheckQuestionCss.tempImg}`}></span>
-              </div>
-              <div className={`${CheckQuestionCss.commentN_T}`}>
-                <h1 className={`${CheckQuestionCss.commentName}`}>
-                  {question.author || "익명"}
-                </h1>
-                <textarea
-                  className={`${CheckQuestionCss.commentText}`}
-                  id="textModify"
-                  type="text"
-                  name="text"
-                  value={commentItem.formText}
-                  readOnly
-                  ref={(textarea) => {
-                    if (textarea) adjustHeight(textarea);
-                  }}
-                />
-              </div>
-              <div
-                ref={(el) => (modalRefs.current[idx] = el)} // 각 모달의 ref 저장
-                className={`${CheckQuestionCss.commentEditBox}`}
-              >
-                <span
-                  onClick={() => openEditModal(idx)}
-                  className={`${CheckQuestionCss.edit}`}
-                >
-                  •••
-                </span>
-                <div
-                  className={`fade ${
-                    showEditId === idx ? "visible" : "hidden"
-                  }`}
-                >
-                  {showEditId === idx && (
-                    <EditModal
-                      idx={idx}
-                      setCommentList={setCommentList}
-                      setShowEditId={setShowEditId}
-                      formTexts={commentItem.formText}
-                      id={id}
-                    />
-                  )}
+          {(Array.isArray(commentList) ? commentList : []).map(
+            (commentItem, idx) => (
+              <li key={idx} className={`${CheckQuestionCss.commentItem}`}>
+                <div className={`${CheckQuestionCss.commentImg}`}>
+                  <span className={`${CheckQuestionCss.tempImg}`}></span>
                 </div>
-              </div>
-            </li>
-          ))}
+                <div className={`${CheckQuestionCss.commentN_T}`}>
+                  <h1 className={`${CheckQuestionCss.commentName}`}>
+                    {question.author || "익명"}
+                  </h1>
+                  <textarea
+                    className={`${CheckQuestionCss.commentText}`}
+                    id="textModify"
+                    type="text"
+                    name="text"
+                    value={commentItem.formText}
+                    readOnly
+                    ref={(textarea) => {
+                      if (textarea) adjustHeight(textarea);
+                    }}
+                  />
+                </div>
+                <div
+                  ref={(el) => (modalRefs.current[idx] = el)} // 각 모달의 ref 저장
+                  className={`${CheckQuestionCss.commentEditBox}`}
+                >
+                  <span
+                    onClick={() => openEditModal(idx)}
+                    className={`${CheckQuestionCss.edit}`}
+                  >
+                    •••
+                  </span>
+                  <div
+                    className={`fade ${
+                      showEditId === idx ? "visible" : "hidden"
+                    }`}
+                  >
+                    {showEditId === idx && (
+                      <EditModal
+                        idx={idx}
+                        setCommentList={setCommentList}
+                        setShowEditId={setShowEditId}
+                        formTexts={commentItem.formText}
+                        id={id}
+                      />
+                    )}
+                  </div>
+                </div>
+              </li>
+            )
+          )}
         </ul>
       </div>
     </div>

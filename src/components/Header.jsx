@@ -40,7 +40,6 @@ export const Header = () => {
         Tell Me The Answer
       </Link>
       <nav>
-        <Link to={"/notice"} className="navItem notice"></Link>
         {user ? (
           // 로그인된 경우 로그아웃 버튼 표시
           <button onClick={handleLogout} className="navItem logout">
