@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const CreateQuestion = ({ addQuestion }) => {
+const CreateQuestion = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [nickName, setNickName] = useState("");
@@ -15,11 +15,14 @@ const CreateQuestion = ({ addQuestion }) => {
     const auth = getAuth();
     
     const user = auth.currentUser;
+    
     if (user) {
       // Firestore에서 사용자 닉네임 가져오기
       const fetchNickName = async () => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
-        setNickName(userDoc.exists() ? userDoc.data().nickName : "Unknown");
+        console.log(userDoc);
+        
+        setNickName(userDoc.exists() ? (userDoc.data().nickName ? userDoc.data().nickName : userDoc.data().displayName) : "Unknown");
       };
       fetchNickName();
     }
@@ -35,10 +38,10 @@ const CreateQuestion = ({ addQuestion }) => {
         content,
         author: nickName,
         createdAt: new Date(),
+        commentBox: {},
       });
       alert("질문이 성공적으로 등록되었습니다.");
       // 새로운 질문 추가
-      addQuestion({ title, content });
       navigate("/");
     } catch (error) {
       console.error("질문 등록 실패:", error);

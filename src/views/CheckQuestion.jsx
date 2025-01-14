@@ -2,31 +2,58 @@ import { useParams } from "react-router-dom";
 import CheckQuestionCss from "../assets/css/checkQuestion.module.css";
 import { useState, useEffect, useRef } from "react";
 import { EditModal } from "../components/EditModal";
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore"; // Firebase Firestore imports
+import { db } from "../firebase"; // Firebase app initialization (adjust path as needed)
 
-const CheckQuestion = ({ questions }) => {
+const CheckQuestion = () => {
   const { id } = useParams(); // URL에서 id 가져오기
+  const [question, setQuestion] = useState(null); // 질문 데이터 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
   const [showEditId, setShowEditId] = useState(null); // 수정, 삭제 모달 관련
   const modalRefs = useRef([]); // 각 모달의 ref 배열
-  const question = questions[id]; // 해당 질문 데이터 가져오기
 
   const [isEditable, setIsEditable] = useState(false); // 수정 가능 여부
   const [name, setName] = useState("작성자이름");
   const [formText, setFormText] = useState("");
   const [commentList, setCommentList] = useState([]);
 
-  // 댓글 추가 함수
-  const addComment = (newFormText) => {
-    setCommentList((prevCommentList) => [...prevCommentList, newFormText]);
-  };
+  // 서버에서 데이터 가져오기 (Firestore에서)
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      // 먼저 로컬스토리지에서 QUESTION 키로 데이터를 찾음
+      const storedData = localStorage.getItem("QUESTION");
+      const storedQuestion = storedData ? JSON.parse(storedData) : null;
 
-  // 댓글 등록
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formText !== "") {
-      addComment({ name, formText });
-      setFormText("");
-    }
-  };
+      if (storedQuestion && storedQuestion[id]) {
+        // QUESTION 안에 해당 ID로 저장된 질문이 있으면
+        setQuestion(storedQuestion[id]); // 상태에 저장
+        setLoading(false);
+      } else {
+        // QUESTION 안에 데이터가 없으면 Firestore에서 가져옴
+        const docRef = doc(db, "questions", id); // "questions" 컬렉션에서 id로 해당 문서 참조
+        try {
+          const docSnap = await getDoc(docRef); // 해당 문서 읽기
+          if (docSnap.exists()) {
+            const questionData = docSnap.data();
+            setQuestion(questionData); // 데이터를 상태에 저장
+
+            // 로컬스토리지의 QUESTION 객체에 해당 ID를 추가
+            const updatedData = storedData ? JSON.parse(storedData) : {};
+            updatedData[id] = questionData;
+            localStorage.setItem("QUESTION", JSON.stringify(updatedData)); // QUESTION 객체에 추가
+          } else {
+            console.log("No such document!");
+          }
+          setLoading(false); // 로딩 끝
+        } catch (error) {
+          console.error("Error getting document:", error);
+          setLoading(false); // 에러 발생 시에도 로딩 종료
+        }
+      }
+    };
+
+    fetchQuestion();
+  }, [id]); // id 값이 변경될 때마다 데이터를 다시 가져옴
 
   // 삭제 모달 오픈
   const openEditModal = (id) => {
@@ -55,6 +82,11 @@ const CheckQuestion = ({ questions }) => {
     textarea.style.height = `${textarea.scrollHeight}px`; // 내용에 맞춰 높이 설정
   };
 
+  // 로딩 중 또는 데이터가 없는 경우 처리
+  if (loading) {
+    return <p>Loading question...</p>;
+  }
+
   if (!question) {
     return <p>질문을 찾을 수 없습니다.</p>;
   }
@@ -71,7 +103,7 @@ const CheckQuestion = ({ questions }) => {
       </div>
       <form
         className={`border ${CheckQuestionCss.form}`}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       >
         <textarea
           className={`${CheckQuestionCss.formText}`}

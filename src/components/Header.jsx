@@ -6,7 +6,6 @@ import { onAuthStateChanged, signOut } from "firebase/auth"; // 인증 상태 �
 export const Header = () => {
   const [user, setUser] = useState(null); // 사용자 상태
   const navigate = useNavigate();
-  console.log(user);
   
   useEffect(() => {
     // 인증 상태 리스너 설정
