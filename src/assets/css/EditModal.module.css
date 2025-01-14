@@ -27,7 +27,6 @@
     padding: 0.3rem;
     color: var(--main);
     cursor: pointer;
-    caret-color: transparent;
 }
 .del:hover {
     color: var(--green);

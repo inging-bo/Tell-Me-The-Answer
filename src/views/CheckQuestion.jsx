@@ -2,7 +2,12 @@ import { useParams } from "react-router-dom";
 import CheckQuestionCss from "../assets/css/checkQuestion.module.css";
 import { useState, useEffect, useRef } from "react";
 import { EditModal } from "../components/EditModal";
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore"; // Firebase Firestore imports
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore"; // Firebase Firestore imports
 import { db } from "../firebase"; // Firebase app initialization (adjust path as needed)
 
 const CheckQuestion = () => {
@@ -12,8 +17,6 @@ const CheckQuestion = () => {
   const [showEditId, setShowEditId] = useState(null); // 수정, 삭제 모달 관련
   const modalRefs = useRef([]); // 각 모달의 ref 배열
 
-  const [isEditable, setIsEditable] = useState(false); // 수정 가능 여부
-  const [name, setName] = useState("작성자이름");
   const [formText, setFormText] = useState("");
   const [commentList, setCommentList] = useState([]);
 
@@ -26,35 +29,79 @@ const CheckQuestion = () => {
 
       if (storedQuestion && storedQuestion[id]) {
         // QUESTION 안에 해당 ID로 저장된 질문이 있으면
-        setQuestion(storedQuestion[id]); // 상태에 저장
+        const questionData = storedQuestion[id];
+        setQuestion(questionData); // 질문 상태에 저장
+        setCommentList(questionData.commentBox || []); // 댓글 상태에 저장
         setLoading(false);
       } else {
-        // QUESTION 안에 데이터가 없으면 Firestore에서 가져옴
-        const docRef = doc(db, "questions", id); // "questions" 컬렉션에서 id로 해당 문서 참조
+        // Firestore에서 데이터 가져오기
+        const docRef = doc(db, "questions", id);
         try {
-          const docSnap = await getDoc(docRef); // 해당 문서 읽기
+          const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             const questionData = docSnap.data();
-            setQuestion(questionData); // 데이터를 상태에 저장
+            setQuestion(questionData); // 질문 상태에 저장
+            setCommentList(questionData.commentBox || []); // 댓글 상태에 저장
 
-            // 로컬스토리지의 QUESTION 객체에 해당 ID를 추가
+            // 로컬스토리지에 저장
             const updatedData = storedData ? JSON.parse(storedData) : {};
             updatedData[id] = questionData;
-            localStorage.setItem("QUESTION", JSON.stringify(updatedData)); // QUESTION 객체에 추가
+            localStorage.setItem("QUESTION", JSON.stringify(updatedData));
           } else {
             console.log("No such document!");
           }
-          setLoading(false); // 로딩 끝
+          setLoading(false);
         } catch (error) {
           console.error("Error getting document:", error);
-          setLoading(false); // 에러 발생 시에도 로딩 종료
+          setLoading(false);
         }
       }
     };
 
     fetchQuestion();
-  }, [id]); // id 값이 변경될 때마다 데이터를 다시 가져옴
+  }, [id]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formText.trim()) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const docRef = doc(db, "questions", id);
+      const newComment = {
+        formText: formText.trim(),
+      };
+
+      // Firestore에 댓글 추가
+      await updateDoc(docRef, {
+        commentBox: arrayUnion(newComment),
+      });
+
+      // Firestore에서 최신 데이터 가져오기
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const updatedQuestion = docSnap.data();
+        
+        // 로컬 상태 업데이트
+        setCommentList(updatedQuestion.commentBox || []);
+
+        // 로컬 스토리지 업데이트
+        const storedData = localStorage.getItem("QUESTION");
+        const storedQuestion = storedData ? JSON.parse(storedData) : {};
+        storedQuestion[id] = updatedQuestion;
+        localStorage.setItem("QUESTION", JSON.stringify(storedQuestion));
+      }
+
+      setFormText(""); // 입력 필드 초기화
+    } catch (error) {
+      console.error("Error adding comment:", error);
+      alert("댓글을 추가하는 중 오류가 발생했습니다.");
+    }
+  };
+  console.log("commentList:", commentList);
   // 삭제 모달 오픈
   const openEditModal = (id) => {
     setShowEditId((prevId) => (prevId === id ? null : id)); // 같은 ID를 클릭하면 닫기
@@ -103,7 +150,7 @@ const CheckQuestion = () => {
       </div>
       <form
         className={`border ${CheckQuestionCss.form}`}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <textarea
           className={`${CheckQuestionCss.formText}`}
@@ -123,14 +170,14 @@ const CheckQuestion = () => {
       </form>
       <div className={`${CheckQuestionCss.commentBox}`}>
         <ul className={`${CheckQuestionCss.commentList}`}>
-          {commentList.map((commentItem, idx) => (
+          {(Array.isArray(commentList) ? commentList : []).map((commentItem, idx) => (
             <li key={idx} className={`${CheckQuestionCss.commentItem}`}>
               <div className={`${CheckQuestionCss.commentImg}`}>
                 <span className={`${CheckQuestionCss.tempImg}`}></span>
               </div>
               <div className={`${CheckQuestionCss.commentN_T}`}>
                 <h1 className={`${CheckQuestionCss.commentName}`}>
-                  {commentItem.name}
+                  {question.author || "익명"}
                 </h1>
                 <textarea
                   className={`${CheckQuestionCss.commentText}`}
@@ -138,14 +185,7 @@ const CheckQuestion = () => {
                   type="text"
                   name="text"
                   value={commentItem.formText}
-                  readOnly={!isEditable}
-                  onChange={(e) => {
-                    if (isEditable) {
-                      const updatedCommentList = [...commentList];
-                      updatedCommentList[idx].formText = e.target.value;
-                      setCommentList(updatedCommentList);
-                    }
-                  }}
+                  readOnly
                   ref={(textarea) => {
                     if (textarea) adjustHeight(textarea);
                   }}
@@ -172,6 +212,7 @@ const CheckQuestion = () => {
                       setCommentList={setCommentList}
                       setShowEditId={setShowEditId}
                       formTexts={commentItem.formText}
+                      id={id}
                     />
                   )}
                 </div>
