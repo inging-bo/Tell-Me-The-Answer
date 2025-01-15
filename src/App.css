@@ -20,7 +20,7 @@
     max-height: 700px;
 }
 
-.routerSection {
+.routerSection:is(.checkQuestionSection) {
     overflow: scroll;
     scrollbar-width: none;
 }
@@ -132,13 +132,6 @@ nav {
 
 
 /* @@@ 회원가입 모달 END @@@*/
-
-@media (max-width: 375px) {
-    .homeBtn {
-        position: fixed;
-        bottom: 0.5rem;
-    }
-}
 
 /* fade 효과 */
 

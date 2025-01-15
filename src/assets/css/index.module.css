@@ -28,21 +28,25 @@
 
 /* ------------------------ */
 
-/* @@@ 질문리스트 START @@@*/
 .questionList {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    overflow: hidden; /* 슬라이드 효과를 위해 추가 */
+    position: relative;
+    justify-content: space-between;
+    transition: transform 0.5s ease-in-out; /* 부드러운 이동 효과 */
 }
+
 .questionItem {
-    flex: 40%;
-    max-width: 47%;
+    flex: 0 0 45%; /* 고정 너비로 설정 */
+    max-width: 45%;
     border-radius: .5rem;
     border: solid .15rem #ffffff;
     overflow: hidden;
 }
+
 .linkItem {
-    /* pointer-events: none; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,25 +55,28 @@
     white-space: nowrap;
     text-align: left;
 }
+
 .title {
     font-size: 1rem;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
 }
+
 .text {
     font-size: 0.8rem;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
 }
+
 .nameBox {
     display: flex;
     width: 100%;
-    /* justify-content: space-between; */
     align-items: baseline;
     font-size: .6rem;
 }
+
 .Author {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -77,6 +84,7 @@
     min-width: 65%;
     max-width: 65%;
 }
+
 .comment {
     position: relative;
     overflow: hidden;
@@ -85,6 +93,7 @@
     max-width: 1.9rem;
     letter-spacing: 0.1rem;
 }
+
 .comment::before {
     content: "";
     position: absolute;
@@ -96,68 +105,71 @@
     background-position: left;
     background-repeat: no-repeat;
 }
-/* @@@ 질문리스트 END @@@*/
+/* @@@ 질문리스트 END @@@ */
 
 /* ----------------------- */
 
-/* @@@ 화살표 START @@@*/
+/* @@@ 화살표 START @@@ */
 .arrowBox {
-    
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    caret-color: transparent;
 }
+
 .arrow {
     width: 3.5rem;
     height: 3.5rem;
-    position: absolute;
-    bottom: 0;
     background-repeat: no-repeat;
     background-size: 60%;
     background-position: center;
     border: solid .1rem #ffffff50;
     border-radius: 1.75rem;
     backdrop-filter: blur(0.2rem);
+    pointer-events: all; /* 클릭 가능 */
+    cursor: pointer;
 }
+
 .left {
     background-image: url(../img/arrow.svg);
     transform: rotate(180deg);
-    left: 13%;
 }
+
 .right {
     background-image: url(../img/arrow.svg);
-    right: 13%;
 }
 
-@media (max-width: 375px) {
-    .arrow {
-      position: fixed;
-      bottom: 0.5rem;
-    }
-  }
+/* @@@ 화살표 END @@@ */
 
-/* @@@ 화살표 END @@@*/
-
-/* @@@ 페이지 표시 START @@@*/
-
+/* @@@ 페이지 네이션 START @@@ */
 .pageNation {
-    position: absolute;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: .5rem;
-    bottom: 5rem;
-    left: 50%;
-    transform: translate(-50%);
+    margin-top: -1.5rem;
 }
+
 .page {
     width: .6rem;
     height: .6rem;
-    border-radius: 1.75rem;
+    border-radius: 50%;
     background-color: gray;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 10;
 }
-.curPage {
-    background-color: var(--green);;
-}
-@media (max-width: 375px) {
-    .pageNation {
-      position: fixed;
-    }
-  }
 
-/* @@@ 페이지 표시시 END @@@*/
+.page:hover {
+    background-color: #efffce
+}
+
+.curPage {
+    background-color: var(--green);
+}
+
+/* @@@ 페이지 네이션 END @@@ */

@@ -74,11 +74,14 @@ const CheckQuestion = () => {
                 const updatedData = docSnap.data();
                 setQuestion(updatedData); // 상태 업데이트
                 setCommentList(updatedData.commentBox || []); // 댓글 리스트 업데이트
-
+                
                 // 로컬스토리지에 최신 데이터 저장
                 const storedData = localStorage.getItem("QUESTION");
                 const storedQuestion = storedData ? JSON.parse(storedData) : {};
                 storedQuestion[id] = updatedData; // 최신 데이터로 갱신
+                console.log(updatedData);
+                // console.log(storedQuestion);
+                // console.log(storedQuestion[id]);
                 localStorage.setItem("QUESTION", JSON.stringify(storedQuestion)); // 로컬스토리지에 업데이트
             }
         } catch (error) {
