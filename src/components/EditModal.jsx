@@ -3,7 +3,6 @@ import { doc, updateDoc, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase"; // Firestore 초기화 경로에 맞게 수정
 
 export const EditModal = ({
-  idx,
   setCommentList,
   setShowEditId,
   formTexts,
@@ -14,23 +13,23 @@ export const EditModal = ({
     try {
       // Firestore에서 댓글 삭제
       const docRef = doc(db, "questions", id);
+      const targetComment = { date: formTexts.date, formText: formTexts.formText }; // 고유 ID와 텍스트를 포함한 객체
       await updateDoc(docRef, {
-        commentBox: arrayRemove({ formText: formTexts }), // 댓글 내용으로 제거
+        commentBox: arrayRemove(targetComment), // 정확히 매칭되는 객체만 제거
       });
 
       // 로컬 상태에서 댓글 삭제
       setCommentList((prevCommentList) =>
-        prevCommentList.filter(
-          (content, index) => index !== idx && content.formText !== formTexts
-        )
+          prevCommentList.filter((comment) => comment.date !== formTexts.date)
       );
 
       // 로컬 스토리지에서 댓글 삭제
       const storedData = localStorage.getItem("QUESTION");
       const storedQuestion = storedData ? JSON.parse(storedData) : {};
+      console.log(storedQuestion.commentBox)
       if (storedQuestion[id]) {
         storedQuestion[id].commentBox = storedQuestion[id].commentBox.filter(
-          (content) => content.formText !== formTexts
+            (comment) => comment.date !== formTexts.date
         );
         localStorage.setItem("QUESTION", JSON.stringify(storedQuestion));
       }

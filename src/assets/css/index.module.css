@@ -96,13 +96,6 @@
     background-position: left;
     background-repeat: no-repeat;
 }
-.comment::after {
-    content: "+";
-    position: absolute;
-    left: 1.5rem;
-    padding-left: 0.05rem;
-    background-color: var(--main);
-}
 /* @@@ 질문리스트 END @@@*/
 
 /* ----------------------- */
