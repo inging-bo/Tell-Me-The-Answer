@@ -3,8 +3,8 @@ import CheckQuestionCss from "../assets/css/checkQuestion.module.css";
 import {useState, useEffect, useRef} from "react";
 import {EditModal} from "../components/EditModal";
 import {doc, getDoc, updateDoc, arrayUnion, onSnapshot} from "firebase/firestore"; // Firebase Firestore imports
-import {db} from "../firebase"; // Firebase app initialization (adjust path as needed)
-
+import {auth, db} from "../firebase";
+import {getAuth, onAuthStateChanged} from "firebase/auth"; // Firebase app initialization (adjust path as needed)
 const CheckQuestion = () => {
     const {id} = useParams(); // URL에서 id 가져오기
     const [question, setQuestion] = useState(null); // 질문 데이터 상태
@@ -14,6 +14,8 @@ const CheckQuestion = () => {
 
     const [formText, setFormText] = useState("");
     const [commentList, setCommentList] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+    const [commentAuthor, setCommentAuthor] = useState(null);
 
     // 서버에서 데이터 가져오기 (Firestore에서)
     useEffect(() => {
@@ -45,10 +47,22 @@ const CheckQuestion = () => {
 
         fetchQuestion();
     }, [id]);
+    // 사용자 로그인 상태 확인
+    useEffect(() => {
+        const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+            setIsLoggedIn(!!user); // 사용자가 있으면 true, 없으면 false
+        });
 
+        // 컴포넌트가 언마운트될 때 리스너 정리
+        return () => unsubscribeAuth();
+    }, []);
+            console.log(getAuth()["currentUser"]);
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        if (!isLoggedIn) {
+            alert("로그인을 해야 댓글을 작성할 수 있습니다.");
+            return;
+        }
         if (!formText.trim()) {
             alert("댓글을 입력해주세요.");
             return;
@@ -79,9 +93,6 @@ const CheckQuestion = () => {
                 const storedData = localStorage.getItem("QUESTION");
                 const storedQuestion = storedData ? JSON.parse(storedData) : {};
                 storedQuestion[id] = updatedData; // 최신 데이터로 갱신
-                console.log(updatedData);
-                // console.log(storedQuestion);
-                // console.log(storedQuestion[id]);
                 localStorage.setItem("QUESTION", JSON.stringify(storedQuestion)); // 로컬스토리지에 업데이트
             }
         } catch (error) {
