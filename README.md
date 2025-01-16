@@ -8,25 +8,35 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## 디렉토리 구조
+```
 ing_project/
-├── .vscode               # VSCode setting folder
-├── .api
-├── public                # Public folder
+├── .firebase
+├── .github/workflows
+├── public
 ├── src
 │   ├── assert
-│   │   └── css
+│   │   ├── css
+│   │   └── img
 │   ├── components        # all components
-│   │   └── modal
 │   ├── router
 │   ├── views             
 │   ├── App.css
 │   ├── App.jsx
+│   ├── firebase.js
 │   ├── index.css
 │   └── main.jsx
 ├── .gitignore            # Ignore Git commit
 ├── eslint.config.js      
+├── firebase.json      
+├── firebase.indexes.json      
+├── firestore.rules      
 ├── index.html
-├── package-lock.json     # Same packages with others
 ├── package.json          # Package information
+├── package-lock.json     # Same packages with others
 ├── README.md             # README file
-└── tsconfig.node.json
+└── vite.config.js
+```
+
+### 배포 주소
+
+- https://tell-me-the-answer.web.app
