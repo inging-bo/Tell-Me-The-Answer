@@ -8,16 +8,21 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4  # ✅ v4 사용 권장
         with:
-          node-version: '18'  # Vite에서 사용하는 Node.js 버전 설정
-      - run: npm install  # 의존성 설치
-      - run: npm run build  # Vite 빌드
+          node-version: '20'         # ✅ Firebase CLI와 호환되는 버전
+
+      - run: npm install             # 의존성 설치
+      - run: npm run build           # Vite 빌드
+
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools  # Firebase CLI 설치
+        run: npm install -g firebase-tools
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
