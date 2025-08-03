@@ -1,11 +1,6 @@
-# React + Vite
+# Q & A 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+질문을 올리고 댓글로 답을 해주는 서비스를 구현했습니다.
 
 ## 디렉토리 구조
 ```
